@@ -15,57 +15,47 @@
 </head>
 
  <body>
-    <header class ="weather-dashboard"> <!-- Header and Current Day Weather-->
+    <header class ="weather-dashboard"> <!-- Header and Current Day Weather for CSS -->
         <h1 class=>Weather Dashboard</h1>
-        <div id="currentDay" class="text-center">
-        </div>
-      </nav>
     </header>
     
     <main class="container" style="max-width: 100%;">
         <div class="row">  <!-- Sets Items in Row -->
             <div class="col-sm-12 col-lg-4 bg-light"> <!-- Bootstrap Settings for page-->
-                <div><h2>Search for a City:</h2></div> 
-
+                <div><h3>Search for a City:</h3></div> 
+                <!-- Form, Input, and Button below here (Uses Bootstrap and referenced in JS)-->
                 <form id="search-form" role="search" class="d-flex align-items-center mb-3">
                     <input type="search" class="form-control" id="search-input" placeholder="San Diego">
                     <button type="submit" class="btn btn-primary ml-1" id="search-button">Search</button>
-                  </form>
+                </form>
                 
                  <p><h6>SEARCHES BELOW HERE:</h6></p>  
             </div>
 
-            <div class="col-sm-12 col-lg-8">
-                <div class="row mr-0">
-                    <div class="col-12 m-3 rounded">
-                        <div class="row">
-
-                            <div class="col-sm-12 col-lg-8">
-                                <span id="city-name" class="city-name align-middle"></span>
-                            </div>
-                        </div>
-                        <!-- 5-Day Forecast Column -->
-                        <div class="row">
-                            <!-- City Search Column -->
-                            <div class="col-12 box">
-                                <div id="cityList">
-                                    <h3>City Name: CHANGE THIS</h3>
-                                </div>
-                                <div class="col-md-4">
+            <div class="col-sm-12 col-lg-8"> <!--Bootstrap for Today and 5-Day Forecast-->
+                    <!--<div class="row mr-0"> Future Usage -->
+                        <div class="col-12 m-3 rounded"> <!--Bootstrap for Today's Weather-->
+                            <div class="row"> 
+                                <div class="col-sm-12 col-lg-8">
+                                    <span id="today-forecast" class="today-forecast align-middle"></span>
                                 </div>
                             </div>
+                            
+                            <div class="row"> <!-- 5-Day Forecast Column -->
+                                <div class="col-12 box currentBackground" id="currentWeather">  <!-- City Search Column -->
+                                    <h3>Today's Forecast:</h3>
+                                </div>
+                                   <!-- <div class="col-md-4"></div> Future Usage-->
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-10 list" id="testtest">
+              <!-- </div> -->
+              <!-- <div class="row"> Future Usage-->
+                    <div class="col-10 list" id="forecastWeather">
                         <h3>5-Day Forecast:</h3>
-                        <!-- <p id="testtest22">test</p> -->
                     </div>
-                </div>
+             <!--   </div> Future Usage-->
                 <!-- 5 Days Weather Forcast Append -->
-                <div class="row" id="5dayApend">
-                </div>
+                <div class="row" id="5dayApend"></div>
             </div>
         </div>
     </main>

@@ -1,11 +1,10 @@
-const submitBtn = document.getElementById('search-button'); //Global letiable for button from HTML
-const searchInput = document.getElementById('search-input'); //Global letiable for search input from actual webpage
+const submitBtn = document.getElementById('search-button'); //Global variable for button from HTML
+const searchInput = document.getElementById('search-input'); //Global variable for search input from actual webpage
 const date = moment(); //Gets Date from moment.JS
 const currentDate = date.format('MMMM Do, YYYY'); //Sets Date Format
 
-function searchApi(event) {  //Function for Current Weather Data
-    //let currentContainer = document.getElementById('currentWeather');
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput.value}&units=imperial&APPID=adec8d3ec2d9ee881802e40b0d7fea07`
+function searchApi(searchTerm) {  //Function for Current Weather Data
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=imperial&APPID=adec8d3ec2d9ee881802e40b0d7fea07`
 
     fetch(url) //Fetches above URL with input paramaters taken from city search box included
 
@@ -14,7 +13,7 @@ function searchApi(event) {  //Function for Current Weather Data
         }
         )
 
-        .then(function (data) { //Uses data to console log and create local letiables
+        .then(function (data) { //Uses data to console log and create local variables
             // console.log(data)
 
             let currentWeatherDisplay = $("<div>").append($("<p>").append($("<h2>").append(data.name + " (" + currentDate + ")", $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"))));
@@ -22,12 +21,9 @@ function searchApi(event) {  //Function for Current Weather Data
             let currentHumidity = $('<p>').text('Humidity : ' + data.main.humidity + '%');
             let currentWind = $('<p>').text('Wind Speed : ' + data.wind.speed + 'MPH');
 
-            currentWeatherDisplay.append(currentTemp).append(currentHumidity).append(currentWind);  //Appends letiables set from above to page
+            currentWeatherDisplay.append(currentTemp).append(currentHumidity).append(currentWind);  //Appends variables 
             $('#currentWeather').empty(); //Clears page first
-            $('#currentWeather').append(currentWeatherDisplay); //Appends letiables to page
-
-
-
+            $('#currentWeather').append(currentWeatherDisplay); //Appends variables to page
 
             secondApiCall(data.coord.lat, data.coord.lon); //Calls for second API to use longitude and latitude from current city location data 
         }
@@ -35,19 +31,19 @@ function searchApi(event) {  //Function for Current Weather Data
 };
 
 async function secondApiCall(lat, lon) {  //Function for Forecast Weather Data
-    //let forecastContainer = document.getElementById('forecastWeather');
     let secondUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&APPID=adec8d3ec2d9ee881802e40b0d7fea07`
 
     let data = await (await fetch(secondUrl)).json() //Fetches above URL with lat and lon paramaters pushed from first API
     console.log(data)
+
     let forecastList = data.list; //Creates array with data
+    $('#fiveDayAppend').empty(); //Clears page first
     for (let i = 1; i < forecastList.length; i += 8) { //Uses for loop to iterate every 8th item (each day gives 8 objects of data)
-        // forecastWeatherDisplay = forecastList[i]
-        let firstForecast = forecastList[i];
-        let {
+        let firstForecast = forecastList[i]; //Creates Array of data
+        let {   //Destructuring objects within data
             dt_txt: forecastDate,
             main: {
-                temp, 
+                temp,
                 humidity
             },
             wind: {
@@ -59,23 +55,72 @@ async function secondApiCall(lat, lon) {  //Function for Forecast Weather Data
                 }
             }
         } = firstForecast;
-        forecastDate = moment(forecastDate).format("MM/DD/YYYY")
-        let currentDate2 = $('<p>').text(`${forecastDate}`);
-        let currentWeatherDisplay2 = $("<img>").attr("src", "http://openweathermap.org/img/w/" + icon + ".png");
-        let currentTemp2 = $('<p>').text('Temperature : ' + temp + '°F ');
-        let currentHumidity2 = $('<p>').text('Humidity : ' + humidity + '%');
-        let currentWind2 = $('<p>').text('Wind Speed : ' + speed + 'MPH');
-        let testTestTest = $('<div>');
-        testTestTest.addClass('col forecast bg-primary text-white ml-3 mb-3 rounded>');
-        testTestTest.append(currentDate2).append(currentWeatherDisplay2).append(currentTemp2).append(currentHumidity2).append(currentWind2);
-        $('#fiveDayAppend').append(testTestTest);
+        forecastDate = moment(forecastDate).format("MM/DD/YYYY")  //Turning data into variables to append
+        let forecastDates = $('<p>').text(`${forecastDate}`);
+        let forecastIcons = $("<img>").attr("src", "http://openweathermap.org/img/w/" + icon + ".png");
+        let forecastTemps = $('<p>').text('Temperature : ' + temp + '°F ');
+        let forecastHumidity = $('<p>').text('Humidity : ' + humidity + '%');
+        let forecastWind = $('<p>').text('Wind Speed : ' + speed + 'MPH');
+        let forecastWeatherData = $('<div>');
+        forecastWeatherData.addClass('col forecast bg-primary text-white ml-3 mb-3'); //Creating class with bootstrap
+        forecastWeatherData.append(forecastDates).append(forecastIcons).append(forecastTemps).append(forecastHumidity).append(forecastWind); //Appending variables
+
+        $('#fiveDayAppend').append(forecastWeatherData); //Appending variabes to html page
         console.log(forecastList[i]);
-        // console.log(firstForecast.dt_txt);  
     }
 };
+function saveSearch(searchTerm) { //Saves Searches
+    let searchTermList = getSearches()
+    searchTermList.push(searchTerm)
+    localStorage.setItem("searchTerm", JSON.stringify(searchTermList));
+}
 
-submitBtn.addEventListener('click', function (event) { //Event listener for submit button click (Prevent Default and first API is called)
+function getSearches(){ //Gets searches
+return JSON.parse(localStorage.getItem("searchTerm")) || [];
+
+}
+const buttonContainer = $('#button-container'); // Get the button container element by id
+buttonContainer.empty(); // Remove any existing buttons in the container
+
+function createSearchButton(searchTerm){ //Creates searched cities buttons and styles them
+    
+    searchButton = $('<button>');
+    searchButton.val(searchTerm);
+    searchButton.text(searchTerm);
+    searchButton.css('background-color', 'blue');
+    searchButton.css('color', 'white');
+    searchButton.css('display', 'block')
+    searchButton.css('margin-top', '10px')
+    searchButton.click(event => {
+        doTheSearch(searchTerm)
+    }
+    )
+    
+    return searchButton
+}
+
+function loadPreviousSearches() {
+let searchTermList = getSearches()
+
+searchTermList.forEach(searchTerm => { 
+  let searchButton = createSearchButton(searchTerm)
+  
+  $('#searchContainer').append(searchButton) //Appending search buttons to html page
+}
+);
+}
+
+loadPreviousSearches(); //Calling function
+
+function doTheSearch(searchTerm){
+    searchApi(searchTerm);
+    saveSearch(searchTerm);
+}
+
+submitBtn.addEventListener('click', function (event) { //Event listener for submit button click (Prevent Default and first API is called) (Also calls search)
+    let searchTerm = searchInput.value
     event.preventDefault();
-    searchApi();
+    console.log(event)
+    doTheSearch(searchTerm)
 }
 );    

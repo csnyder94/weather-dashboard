@@ -7,7 +7,8 @@
 /* Sets Current Forecast Box Style */
    .currentBackground {   
     background:whitesmoke;
-    border-radius: 12px;
+    border-style: solid;
+    border-color: black;
     width: 760px;
     margin-top: -2px;
     margin-left: -10px;

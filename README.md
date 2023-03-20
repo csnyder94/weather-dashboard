@@ -1,6 +1,6 @@
 # Weather Forecast
 
-Add Link
+https://csnyder94.github.io/weather-dashboard/
 
 ## Description
 
@@ -8,7 +8,7 @@ This website allows users to search for a five day weather forecast for a city o
 
 ## Expected Webview
 
-Add Image
+![csnyder94 github io_weather-dashboard_](https://user-images.githubusercontent.com/124528804/226483193-c427dcf3-e9de-4c69-ba15-d30fb76422c6.png)
 
 ## Installation
 
@@ -24,7 +24,7 @@ If you have any issues, feel free to email me at snyder28139_04@hotmail.com.
 
 ## Credits
 
-This project was a collaboration between fellow classmates: ADD HERE
+This project was a collaboration between fellow classmate: Matthew Lombard.  Help was utilized from tutor: Juno Nguyen.
 
 ## License
 

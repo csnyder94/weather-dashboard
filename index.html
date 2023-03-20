@@ -16,7 +16,7 @@
 
  <body>
     <header class ="weather-dashboard"> <!-- Header and Current Day Weather for CSS -->
-        <h1 class=>Weather Dashboard</h1>
+        <h1>Weather Dashboard</h1>
     </header>
     
     <main class="container" style="max-width: 100%;">
@@ -30,7 +30,7 @@
                 </form>
                 
                  <p><h6>Previous Searches:</h6></p> 
-                 <div id="searchContainer"></div> 
+                 <div id="searchContainer"></div>  <!--Referenced in JS to store previous cities search buttons-->
             </div>
 
             <div class="col-sm-12 col-lg-8"> <!--Bootstrap for Today and 5-Day Forecast-->
@@ -42,20 +42,20 @@
                                 </div>
                             </div>
                             
-                            <div class="row"> <!-- 5-Day Forecast Column -->
+                            <div class="row"> <!-- Weather Forecast Column -->
                                 <div class="col-12 box currentBackground" id="currentWeather">  <!-- City Search Column -->
                                     <h3>Today's Forecast:</h3>
                                 </div>
-                                 <div class="col-md-4"></div> 
+                                    <div class="col-md-4"></div> 
                             </div>
                         </div>
-               </div> 
-              <div class="row"> 
-                    <div class="col-10 list" id="forecastWeather">
+                    </div> 
+                <div class="row"> 
+                    <div class="col-10 list" id="forecastWeather"> 
                         <h3>5-Day Forecast:</h3>
                     </div>
-               </div> 
-                <!-- 5 Days Weather Forcast Append -->
+                </div> 
+                <!-- Weather Forecast Append -->
                 <div class="row" id="fiveDayAppend"></div>
             </div>
         </div>

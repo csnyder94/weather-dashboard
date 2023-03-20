@@ -70,9 +70,10 @@ async function secondApiCall(lat, lon) {  //Function for Forecast Weather Data
     }
 };
 function saveSearch(searchTerm) { //Saves Searches
-    let searchTermList = getSearches()
-    searchTermList.push(searchTerm)
-    localStorage.setItem("searchTerm", JSON.stringify(searchTermList));
+    let searchTermList = getSearches();
+    const newSearchTermList = searchTermList.filter(city => city.toUpperCase() !== searchTerm.toUpperCase()); //Makes new list to remove duplicate buttons from being created (removes case-sensitivity cases also)
+    newSearchTermList.push(searchTerm) //Pushes new search list
+    localStorage.setItem("searchTerm", JSON.stringify(newSearchTermList)); //Sets to local storage
 }
 
 function getSearches(){ //Gets searches
@@ -83,7 +84,6 @@ const buttonContainer = $('#button-container'); // Get the button container elem
 buttonContainer.empty(); // Remove any existing buttons in the container
 
 function createSearchButton(searchTerm){ //Creates searched cities buttons and styles them
-    
     searchButton = $('<button>');
     searchButton.val(searchTerm);
     searchButton.text(searchTerm);
@@ -91,6 +91,7 @@ function createSearchButton(searchTerm){ //Creates searched cities buttons and s
     searchButton.css('color', 'white');
     searchButton.css('display', 'block')
     searchButton.css('margin-top', '10px')
+    
     searchButton.click(event => {
         doTheSearch(searchTerm)
     }
@@ -102,19 +103,22 @@ function createSearchButton(searchTerm){ //Creates searched cities buttons and s
 function loadPreviousSearches() {
 let searchTermList = getSearches()
 
+$('#searchContainer').empty(); //Clears container of previous searched buttons
+
 searchTermList.forEach(searchTerm => { 
   let searchButton = createSearchButton(searchTerm)
   
-  $('#searchContainer').append(searchButton) //Appending search buttons to html page
+$('#searchContainer').append(searchButton) //Appending search buttons to html container
 }
 );
 }
 
 loadPreviousSearches(); //Calling function
 
-function doTheSearch(searchTerm){
+function doTheSearch(searchTerm){ //Searches saves and load previous searches function
     searchApi(searchTerm);
     saveSearch(searchTerm);
+    loadPreviousSearches();
 }
 
 submitBtn.addEventListener('click', function (event) { //Event listener for submit button click (Prevent Default and first API is called) (Also calls search)

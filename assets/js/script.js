@@ -62,7 +62,7 @@ async function secondApiCall(lat, lon) {  //Function for Forecast Weather Data
         let forecastHumidity = $('<p>').text('Humidity : ' + humidity + '%');
         let forecastWind = $('<p>').text('Wind Speed : ' + speed + 'MPH');
         let forecastWeatherData = $('<div>');
-        forecastWeatherData.addClass('col forecast bg-primary text-white ml-3 mb-3'); //Creating class with bootstrap
+        forecastWeatherData.addClass('col forecast bg-primary text-white me-4'); //Creating class with bootstrap
         forecastWeatherData.append(forecastDates).append(forecastIcons).append(forecastTemps).append(forecastHumidity).append(forecastWind); //Appending variables
 
         $('#fiveDayAppend').append(forecastWeatherData); //Appending variabes to html page
@@ -87,10 +87,12 @@ function createSearchButton(searchTerm){ //Creates searched cities buttons and s
     searchButton = $('<button>');
     searchButton.val(searchTerm);
     searchButton.text(searchTerm);
-    searchButton.css('background-color', 'blue');
-    searchButton.css('color', 'white');
+    searchButton.css('background-color', 'lightgray');
+    searchButton.css('color', 'black');
     searchButton.css('display', 'block')
+    searchButton.css('width', '100%')
     searchButton.css('margin-top', '10px')
+    searchButton.css('border-radius', '4px')
     
     searchButton.click(event => {
         doTheSearch(searchTerm)
